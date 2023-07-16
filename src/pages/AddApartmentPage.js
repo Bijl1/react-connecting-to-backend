@@ -1,47 +1,50 @@
 import { useState } from "react";
-0
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+const apiURL = "https://ironbnb-m3.herokuapp.com/apartments";
+
 function AddApartmentPage() {
-    const [headline, setHeadline] = useState("");
-    const [price, setPrice] = useState(1);
+  const [headline, setHeadline] = useState("");
+  const [price, setPrice] = useState(1);
+  const navigate = useNavigate();
 
-    const handleSubmit = (e) => {          
-        e.preventDefault();
-        const body = { title: headline, pricePerDay: price };
-        
-        axios
-          .post("https://ironbnb-m3.herokuapp.com/apartments", body)
-          .then((response) => {
-            setHeadline("");
-            setPrice(1);
-          });
-      };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const body = { title: headline, pricePerDay: price };
 
-    return (
-        <div className="AddApartmentPage">
-            <h3>Add New Apartment</h3>
+    axios.post(apiURL, body).then((response) => {
+      setHeadline("");
+      setPrice(1);
 
-            <form >
-                <label>Title</label>
-                <input
-                type="text"
-                name="headline"
-                onChange={(e) => setHeadline(e.target.value)}
-                value={headline}
-                />
+      navigate("/");
+    });
+  };
 
-                <label>Price per Day</label>
-                <input
-                type="number"
-                name="pricePerDay"
-                onChange={(e) => setPrice(e.target.value)}
-                value={price}
-                />
+  return (
+    <div className="AddApartmentPage">
+      <h3>Add New Apartment</h3>
 
-                <button type="submit">Create Apartment</button>
+      <form onSubmit={handleSubmit}>
+        <label>Title</label>
+        <input
+          type="text"
+          name="headline"
+          onChange={(e) => setHeadline(e.target.value)}
+          value={headline}
+        />
 
-            </form>
-        </div>
-    )
+        <label>Price per Day</label>
+        <input
+          type="number"
+          name="price"
+          onChange={(e) => setPrice(e.target.value)}
+          value={price}
+        />
+        <button type="submit">Create Apartment</button>
+      </form>
+    </div>
+  );
 }
 
 export default AddApartmentPage;
