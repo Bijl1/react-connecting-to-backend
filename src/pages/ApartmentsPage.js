@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";     // <== IMPORT useEffect
 import axios from "axios";                       // <== IMPORT axios
 
 function ApartmentsPage() {
-  const [apartments, setApartments] = useState([]);
+  const [headline, setHeadline] = useState([]);
 
   useEffect(() => {                                // <== ADD THE EFFECT
     axios
